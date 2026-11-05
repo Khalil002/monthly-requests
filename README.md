@@ -37,18 +37,18 @@ These rules are defined once, as a finite-state machine in `src/domain/workflow.
 
 ---
 
-## 🎯 Why it fits the INDI Junior React Developer role
+## 🔧 Technical highlights
 
-| From the job post | Evidence in this repository |
+| Area | How it's done |
 | --- | --- |
-| Platform that facilitates monthly requests | This is the product itself: intake, approval and tracking of monthly work |
-| ReactJS plus Flux / Redux | Hooks-only React 19 UI. State lives in Redux Toolkit slices, `createAsyncThunk` and `createEntityAdapter`, and data flows one way, Flux style |
-| Big data and predictive analytics | `src/domain/analytics.js` aggregates in a single pass, fills empty months, and fits an ordinary-least-squares trend to forecast demand |
-| Practical problem solving | Business rules sit in pure modules, and the API client is injected through the thunk `extraArgument`, so it can be replaced or faked |
-| Code reviews and testing | 49 tests across the domain, API, store and component layers (Vitest and Testing Library), plus CI on every push |
-| JavaScript, CSS3, HTML5, ES2015+ | Modules, destructuring, spread, `async`/`await`, optional chaining, `structuredClone`. Custom properties, grid, `color-mix()`, `:has()`. Semantic HTML5 markup |
-| Command line, APIs, client-side performance | npm scripts, a REST client with typed `ApiError`s, `React.memo`, memoised selectors, and a hand-rolled chart that keeps the bundle near 90 kB gzipped |
-| Data structures and variable types | `Map` buckets, `Set` de-duplication, a normalised entity store, frozen enum objects |
+| UI and state | React 19 with hooks only. Redux Toolkit slices, `createAsyncThunk` and `createEntityAdapter` keep data flowing one way, Flux style |
+| Analytics | `src/domain/analytics.js` aggregates in a single pass, fills empty months, and fits an ordinary-least-squares trend to forecast demand |
+| Architecture | Business rules live in pure modules, and the API client is injected through the thunk `extraArgument`, so it can be replaced or faked |
+| Quality | 49 tests across the domain, API, store and component layers (Vitest and Testing Library), plus CI on every push |
+| Modern JavaScript, CSS and HTML | Modules, destructuring, spread, `async`/`await`, optional chaining, `structuredClone`. Custom properties, grid, `color-mix()`, `:has()`. Semantic HTML5 markup |
+| Performance | `React.memo`, memoised selectors, and a hand-rolled chart that keeps the bundle near 90 kB gzipped |
+| Data structures | `Map` buckets, `Set` de-duplication, a normalised entity store, frozen enum objects |
+| Deployment | Multi-stage Docker image (tests, then build, then nginx) launched with one command |
 
 ---
 
