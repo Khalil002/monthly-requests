@@ -64,6 +64,8 @@ npm run build      # create an optimised build in dist/
 npm run preview    # serve that build locally
 ```
 
+To deploy with Docker in one command, see the [self-hosting guide](#-self-hosting-guide).
+
 On first launch the app seeds six months of sample requests into `localStorage`. Clear the site's storage to start over.
 
 ### Connecting a real API
@@ -75,6 +77,65 @@ VITE_API_URL=https://api.example.com
 ```
 
 The backend must implement the five routes listed at the top of `src/api/mockServer.js`.
+
+---
+
+## 🐳 Self-hosting guide
+
+Run your own copy on a laptop, a home server or a VPS.
+
+### Option A: Docker (one command)
+
+Requirements: [Docker](https://docs.docker.com/get-docker/) with the Compose plugin (bundled with Docker Desktop).
+
+```bash
+git clone https://github.com/Khalil002/monthly-requests.git
+cd monthly-requests
+docker compose up -d --build
+```
+
+Then open **http://localhost:8080**.
+
+The image is built in two stages. The first stage installs dependencies, **runs the test suite** and compiles the app, so a broken build never ships. The second stage serves the static output from nginx, with gzip, long-lived caching for hashed assets, and a fallback to `index.html`.
+
+| Task | Command |
+| --- | --- |
+| Use another port | `PORT=3000 docker compose up -d --build` |
+| Point at a real backend | `VITE_API_URL=https://api.example.com docker compose up -d --build` |
+| View logs | `docker compose logs -f` |
+| Check health | `docker ps` shows `(healthy)` once nginx responds |
+| Update to the latest code | `git pull && docker compose up -d --build` |
+| Stop and remove | `docker compose down` |
+
+You can also set `PORT` and `VITE_API_URL` in a `.env` file next to `docker-compose.yml` instead of on the command line. Because `VITE_API_URL` is baked in at build time, rebuild after you change it.
+
+Without Compose, the same thing takes two commands:
+
+```bash
+docker build -t monthly-requests .
+docker run -d --name monthly-requests -p 8080:80 --restart unless-stopped monthly-requests
+```
+
+### Option B: Node.js only
+
+Requirements: Node.js 20 or newer.
+
+```bash
+git clone https://github.com/Khalil002/monthly-requests.git
+cd monthly-requests
+npm ci
+npm run build
+npm run preview -- --host --port 8080
+```
+
+`npm run build` writes plain static files to `dist/`. For a long-running setup, serve that folder from any web server (nginx, Caddy, Apache) and route unknown paths to `index.html`. The bundled `nginx.conf` is a ready-made example.
+
+### Troubleshooting
+
+- **Port already in use**: choose another with `PORT=<number>`.
+- **Old data still showing**: requests live in your browser's `localStorage`, so clear site data for the host to reseed.
+- **Build fails at `npm test`**: a test is red. Run `npm test` locally to see which one.
+- **Behind a corporate proxy**: pass it into the build with `docker compose build --build-arg HTTPS_PROXY=$HTTPS_PROXY`.
 
 ---
 
