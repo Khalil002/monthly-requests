@@ -1,12 +1,16 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { makeStore } from './store';
+import App from './App';
+import './styles.css';
 
-function App() {
-  return <h1>Monthly Requests</h1>;
-}
+const store = makeStore();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 );
