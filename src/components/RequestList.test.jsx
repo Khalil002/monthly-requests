@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithStore } from '../test/renderWithStore';
 import RequestList from './RequestList';
@@ -7,7 +7,7 @@ import { fetchRequests } from '../store/requestsSlice';
 
 async function setup() {
   const utils = renderWithStore(<RequestList />);
-  await utils.store.dispatch(fetchRequests());
+  await act(() => utils.store.dispatch(fetchRequests()));
   return utils;
 }
 
