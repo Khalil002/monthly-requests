@@ -23,7 +23,11 @@ export default function MonthlyChart({ series, forecast, metric = 'count' }) {
               {unit}
             </span>
             <span className="chart__bar" style={{ height: `${(b[metric] / max) * 100}%` }} />
-            <span className="chart__label">{formatMonth(b.month).replace(' ', ' ')}</span>
+            <span className="chart__label" aria-hidden="true">
+              {formatMonth(b.month).split(' ')[0]}
+              <br />
+              {b.month.slice(0, 4)}
+            </span>
           </li>
         ))}
       </ol>

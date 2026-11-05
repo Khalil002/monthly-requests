@@ -176,7 +176,7 @@ button, input, select, textarea {
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1rem;
 }
 .stat { padding: 1rem 1.25rem; }
@@ -234,7 +234,7 @@ button, input, select, textarea {
   justify-content: flex-end;
   align-items: center;
   position: relative;
-  padding-bottom: 1.6rem;
+  padding-bottom: 2.4rem;
 }
 .chart__bar {
   width: 100%;
@@ -258,6 +258,8 @@ button, input, select, textarea {
   position: absolute;
   bottom: 0;
   font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
   color: var(--muted);
 }
 .chart__caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); }
@@ -439,6 +441,8 @@ button, input, select, textarea {
   .tabs a { padding: 0.4rem 0.5rem; font-size: 0.875rem; }
   .filters .field--inline { flex: 1 1 calc(50% - 0.75rem); }
   .cards { grid-template-columns: 1fr; }
+  .chart__bars { gap: 0.35rem; }
+  .stat__value { font-size: 1.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
