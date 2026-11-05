@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:-}
+    image: monthly-requests:latest
+    container_name: monthly-requests
+    ports:
+      - "${PORT:-8080}:80"
+    restart: unless-stopped
