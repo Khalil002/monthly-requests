@@ -34,7 +34,10 @@ export function buildSeed(now = new Date()) {
   const base = currentMonth(now);
   return ROWS.map(([title, category, priority, estimatedHours, offset, status], i) => {
     const month = addMonths(base, offset);
-    const createdAt = `${month}-${String((i % 20) + 1).padStart(2, '0')}T09:00:00.000Z`;
+    // Spread across the month, but never later than "now" (keeps seed in the past).
+    const planned = new Date(`${month}-${String((i % 20) + 1).padStart(2, '0')}T09:00:00.000Z`);
+    const latest = new Date(now.getTime() - (ROWS.length - i) * 3600_000);
+    const createdAt = (planned < latest ? planned : latest).toISOString();
     return {
       id: `req-${String(i + 1).padStart(3, '0')}`,
       title,
